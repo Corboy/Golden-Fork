@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         display: ['Playfair Display', 'serif'],
-        body: ['Outfit', 'sans-serif'],
+        body: ['Poppins', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -57,6 +57,7 @@ export default {
           light: "hsl(var(--gold-light))",
         },
         ember: "hsl(var(--ember))",
+        elevated: "hsl(var(--surface-elevated))",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -86,11 +87,11 @@ export default {
         },
         "pulse-glow": {
           "0%, 100%": { boxShadow: "0 0 20px hsl(43 100% 50% / 0.3)" },
-          "50%": { boxShadow: "0 0 40px hsl(43 100% 50% / 0.6)" },
+          "50%": { boxShadow: "0 0 50px hsl(43 100% 50% / 0.6)" },
         },
-        "shimmer": {
-          "0%": { backgroundPosition: "-200% 0" },
-          "100%": { backgroundPosition: "200% 0" },
+        "float": {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-8px)" },
         },
       },
       animation: {
@@ -99,8 +100,8 @@ export default {
         "fade-in": "fade-in 0.6s ease-out forwards",
         "fade-in-up": "fade-in-up 0.8s ease-out forwards",
         "scale-in": "scale-in 0.5s ease-out forwards",
-        "pulse-glow": "pulse-glow 2s ease-in-out infinite",
-        "shimmer": "shimmer 2s linear infinite",
+        "pulse-glow": "pulse-glow 2.5s ease-in-out infinite",
+        "float": "float 3s ease-in-out infinite",
       },
     },
   },
