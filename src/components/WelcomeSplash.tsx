@@ -5,15 +5,15 @@ const WelcomeSplash = () => {
   const [fading, setFading] = useState(false);
 
   useEffect(() => {
-    // Start fade-out sequence after 1.4s
+    // 5 seconds total: start fade-out sequence at 4.4s
     const timer = setTimeout(() => {
       setFading(true);
-    }, 1400);
+    }, 4400);
 
-    // Completely remove from DOM after fade-out transition completes (2.0s total)
+    // Completely unmount after 5.0s
     const removeTimer = setTimeout(() => {
       setVisible(false);
-    }, 2000);
+    }, 5000);
 
     return () => {
       clearTimeout(timer);
@@ -34,7 +34,7 @@ const WelcomeSplash = () => {
       className={`fixed inset-0 z-[100] bg-[#070707] flex flex-col items-center justify-center cursor-pointer select-none transition-all duration-700 ${
         fading ? "opacity-0 -translate-y-4 pointer-events-none" : "opacity-100 translate-y-0"
       }`}
-      aria-label="Welcome to Golden Fork - Tap anywhere to enter"
+      aria-label="Welcome to Golden Fork - Tap anywhere to skip"
     >
       {/* Ambient gold glow behind seal */}
       <div className="absolute w-72 h-72 rounded-full bg-primary/20 blur-[100px] pointer-events-none animate-pulse-glow" />
@@ -71,13 +71,17 @@ const WelcomeSplash = () => {
           Swahili Cuisine • Mikocheni
         </p>
 
-        {/* Shimmering Gold Progress Line */}
+        {/* Shimmering Gold Progress Line (4.4s) */}
         <div
-          className="w-32 h-1 bg-white/10 rounded-full mt-8 overflow-hidden relative animate-fade-in"
+          className="w-36 h-1 bg-white/10 rounded-full mt-8 overflow-hidden relative animate-fade-in"
           style={{ animationDelay: "0.5s" }}
         >
-          <div className="h-full bg-gradient-to-r from-primary via-[#FFE28A] to-primary rounded-full animate-[progress_1.4s_ease-in-out_forwards]" />
+          <div className="h-full bg-gradient-to-r from-primary via-[#FFE28A] to-primary rounded-full animate-[progress_4.4s_ease-in-out_forwards]" />
         </div>
+
+        <span className="text-[10px] text-muted-foreground/60 font-body uppercase tracking-wider mt-4">
+          Tap anywhere to skip
+        </span>
       </div>
     </div>
   );

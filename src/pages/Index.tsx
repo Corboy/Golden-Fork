@@ -23,7 +23,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground flex flex-col">
+    <div className="min-h-screen w-full max-w-[100vw] overflow-x-hidden bg-background text-foreground selection:bg-primary selection:text-primary-foreground flex flex-col">
       <WelcomeSplash />
       
       <Navbar
@@ -32,7 +32,7 @@ const Index = () => {
         onOpenCart={scrollToCheckout}
       />
 
-      <main className="flex-1">
+      <main className="flex-1 w-full max-w-[100vw] overflow-x-hidden">
         <HeroSection />
         <MenuSection searchQuery={searchQuery} />
         <OrderSection />
