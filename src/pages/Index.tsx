@@ -1,4 +1,5 @@
 import { useState } from "react";
+import WelcomeSplash from "@/components/WelcomeSplash";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import MenuSection from "@/components/MenuSection";
@@ -23,6 +24,8 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground flex flex-col">
+      <WelcomeSplash />
+      
       <Navbar
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
