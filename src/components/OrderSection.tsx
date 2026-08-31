@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Minus, Plus, Trash2, MessageCircle, ShoppingBag, User, Phone, MapPin, Building, Clock, Check, ArrowRight, ArrowLeft, AlertCircle, CheckCircle2, RotateCcw, ExternalLink, Sparkles } from "lucide-react";
+import { Minus, Plus, Trash2, MessageCircle, ShoppingBag, User, Phone, MapPin, Building, Clock, Check, ArrowRight, ArrowLeft, AlertCircle, CheckCircle2, RotateCcw } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { business, getWhatsAppUrl } from "@/config/business";
 
@@ -40,7 +40,6 @@ const OrderSection = () => {
   useEffect(() => {
     if (!orderSubmitted || !submittedWhatsAppUrl) return;
 
-    // Countdown interval every 1 second
     const interval = setInterval(() => {
       setRedirectCountdown((prev) => {
         if (prev <= 1) {
@@ -51,7 +50,6 @@ const OrderSection = () => {
       });
     }, 1000);
 
-    // Auto-open WhatsApp after 2.6 seconds
     const timeout = setTimeout(() => {
       window.open(submittedWhatsAppUrl, "_blank");
     }, 2600);
@@ -136,7 +134,6 @@ const OrderSection = () => {
 
     setValidationError(null);
 
-    // Generate reference code e.g. GF-8492
     const refCode = `GF-${Math.floor(1000 + Math.random() * 9000)}`;
     setOrderRefNumber(refCode);
 
@@ -146,7 +143,6 @@ const OrderSection = () => {
     setRedirectCountdown(3);
     setOrderSubmitted(true);
 
-    // Smoothly scroll to top of thank you section
     const orderSection = document.getElementById("order");
     if (orderSection) {
       orderSection.scrollIntoView({ behavior: "smooth" });
@@ -175,142 +171,91 @@ const OrderSection = () => {
   return (
     <section id="order" className="py-12 sm:py-20 relative border-t border-border/40 bg-card/20 overflow-hidden w-full">
       <div className="container mx-auto px-3.5 sm:px-6 max-w-4xl w-full">
-        {/* Header */}
-        <div className="text-center mb-8 sm:mb-10">
-          <span className="font-body text-[11px] uppercase tracking-[0.35em] text-primary font-bold">
-            {orderSubmitted ? "CONFIRMATION" : "CHECKOUT"}
-          </span>
-          <h2 className="font-display text-3xl sm:text-5xl font-black text-white mt-2">
-            {orderSubmitted ? (
-              <>
-                Order <span className="gradient-gold-text">Confirmed</span>
-              </>
-            ) : (
-              <>
-                Your <span className="gradient-gold-text">Order</span>
-              </>
-            )}
-          </h2>
-          <p className="font-body text-xs sm:text-sm text-muted-foreground mt-2 font-light max-w-md mx-auto">
-            {orderSubmitted
-              ? "Your Swahili cuisine feast is prepared to send to Golden Fork Kitchen."
-              : "Review your dishes, complete quick delivery details, and send your order straight to WhatsApp."}
-          </p>
-        </div>
+        {/* Header (Only shown during checkout, hidden during Thank You for clean focus) */}
+        {!orderSubmitted && (
+          <div className="text-center mb-8 sm:mb-10">
+            <span className="font-body text-[11px] uppercase tracking-[0.35em] text-primary font-bold">
+              CHECKOUT
+            </span>
+            <h2 className="font-display text-3xl sm:text-5xl font-black text-white mt-2">
+              Your <span className="gradient-gold-text">Order</span>
+            </h2>
+            <p className="font-body text-xs sm:text-sm text-muted-foreground mt-2 font-light max-w-md mx-auto">
+              Review your dishes, complete quick delivery details, and send your order straight to WhatsApp.
+            </p>
+          </div>
+        )}
 
-        {/* PROFESSIONAL THANK YOU & ORDER CONFIRMATION SCREEN */}
+        {/* CLEAN, SIMPLE & PRO ANIMATED THANK YOU STATE */}
         {orderSubmitted ? (
-          <div className="max-w-2xl mx-auto card-luxury rounded-3xl p-5 sm:p-9 border border-primary/40 shadow-2xl space-y-6 animate-scale-in text-center">
-            {/* Glowing Brand & Check Animation */}
-            <div className="flex flex-col items-center justify-center">
-              <div className="relative mb-4">
-                <div className="absolute -inset-2 rounded-full bg-primary/20 animate-ping opacity-60" />
-                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full gradient-gold text-primary-foreground flex items-center justify-center shadow-[0_0_50px_hsl(43_100%_50%/0.5)]">
-                  <CheckCircle2 size={46} className="stroke-[2.5]" />
-                </div>
+          <div className="max-w-lg mx-auto card-luxury rounded-3xl p-6 sm:p-10 border border-primary/30 shadow-2xl space-y-6 animate-scale-in text-center">
+            {/* Clean Animated Gold Check */}
+            <div className="relative mx-auto w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
+              <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping opacity-40" />
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full gradient-gold text-primary-foreground flex items-center justify-center shadow-[0_0_40px_hsl(43_100%_50%/0.4)]">
+                <CheckCircle2 size={36} className="stroke-[2.5]" />
               </div>
+            </div>
 
-              {/* Status Pill */}
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary/15 border border-primary/40 text-primary text-[10px] sm:text-xs font-body font-bold uppercase tracking-widest mb-2">
-                <Sparkles size={12} />
-                <span>ODA IMEPOKELEWA • INATUMWA JIKONI</span>
-              </div>
-
-              <h3 className="font-display text-2xl sm:text-4xl font-black text-white">
+            {/* Typography */}
+            <div className="space-y-1.5">
+              <span className="text-[10px] sm:text-xs font-body font-bold uppercase tracking-[0.25em] text-primary">
+                Order Confirmed • {orderRefNumber}
+              </span>
+              <h3 className="font-display text-2xl sm:text-3xl font-black text-white">
                 Asante sana, <span className="gradient-gold-text">{form.fullName}</span>!
               </h3>
-              <p className="font-body text-xs sm:text-sm text-white/75 mt-1 max-w-md">
-                Oda yako imeandaliwa kikamilifu. Tunakuunganisha moja kwa moja na WhatsApp ya jikoni kuthibitisha.
+              <p className="font-body text-xs sm:text-sm text-white/70 font-light max-w-sm mx-auto">
+                Oda yako imeandaliwa. Inafungua WhatsApp kutuma moja kwa moja jikoni.
               </p>
             </div>
 
-            {/* Auto-Redirect Countdown Bar */}
-            <div className="bg-black/40 rounded-2xl p-3.5 border border-white/10 max-w-md mx-auto space-y-2">
-              <div className="flex items-center justify-between text-xs font-body">
-                <span className="text-white/80 flex items-center gap-1.5 font-medium">
-                  <MessageCircle size={14} className="text-[#25D366]" />
-                  Inafungua WhatsApp moja kwa moja...
+            {/* Clean Progress Line Indicator */}
+            <div className="bg-secondary/60 rounded-2xl p-3 border border-white/5 space-y-2">
+              <div className="flex items-center justify-between text-xs font-body text-white/80">
+                <span className="flex items-center gap-1.5 font-medium text-[11px] sm:text-xs">
+                  <MessageCircle size={14} className="text-[#25D366] shrink-0" />
+                  Inaelekea WhatsApp...
                 </span>
-                <span className="text-primary font-bold">{redirectCountdown > 0 ? `${redirectCountdown}s` : "Tayari!"}</span>
+                <span className="text-primary font-bold text-xs">{redirectCountdown > 0 ? `${redirectCountdown}s` : "Tayari!"}</span>
               </div>
-              <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+              <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
                 <div className="h-full bg-gradient-to-r from-primary via-[#FFE28A] to-primary rounded-full animate-[progress_2.6s_ease-out_forwards]" />
               </div>
             </div>
 
-            {/* Official Digital Receipt Card */}
-            <div className="bg-secondary/70 rounded-2xl p-4 sm:p-6 border border-white/10 text-xs font-body text-left space-y-4 max-w-lg mx-auto">
-              <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                <div>
-                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Order Reference</span>
-                  <p className="font-display text-base font-bold text-primary">{orderRefNumber}</p>
-                </div>
-                <div className="text-right">
-                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Destination</span>
-                  <p className="text-xs font-bold text-white truncate max-w-[160px]">{form.deliveryLocation}</p>
-                </div>
-              </div>
-
-              {/* Customer summary */}
-              <div className="grid grid-cols-2 gap-2 text-[11px] py-1 border-b border-white/5">
-                <div>
-                  <span className="text-muted-foreground">Mteja:</span> <span className="text-white font-medium">{form.fullName}</span>
-                </div>
-                <div>
-                  <span className="text-muted-foreground">Simu:</span> <span className="text-white font-medium">{form.phone}</span>
-                </div>
-                <div>
-                  <span className="text-muted-foreground">Muda:</span> <span className="text-white font-medium">{form.preferredTime}</span>
-                </div>
-                {form.officeName && (
-                  <div>
-                    <span className="text-muted-foreground">Ofisi:</span> <span className="text-white font-medium">{form.officeName}</span>
-                  </div>
-                )}
-              </div>
-
-              {/* Itemized list */}
-              <div className="space-y-1.5 pt-1">
-                <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Vyakula Vilivyoagizwa:</span>
-                {items.map((item) => (
-                  <div key={item.id} className="flex items-center justify-between text-xs">
-                    <span className="text-white/90">
-                      {item.quantity} × {item.name}
-                    </span>
-                    <span className="text-primary font-medium">
-                      {(item.price * item.quantity).toLocaleString()} {business.ordering.currency}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Total row */}
-              <div className="pt-3 border-t border-white/10 flex items-center justify-between text-sm">
-                <span className="font-bold text-white">Jumla ya Kulipa:</span>
-                <span className="font-display text-lg font-black gradient-gold-text">
-                  {total.toLocaleString()} {business.ordering.currency}
+            {/* Compact Clean Summary */}
+            <div className="bg-secondary/40 rounded-2xl p-4 border border-white/5 text-xs font-body text-left space-y-2">
+              <div className="flex items-center justify-between font-semibold text-white pb-2 border-b border-white/5">
+                <span>{itemCount} {itemCount === 1 ? "Dish" : "Dishes"} Ordered</span>
+                <span className="text-primary font-display text-base font-bold">
+                  {business.ordering.currencyDisplay} {total.toLocaleString()}
                 </span>
+              </div>
+              <div className="text-muted-foreground text-[11px] space-y-0.5 pt-0.5">
+                <p className="truncate">📍 <strong className="text-white/90">Delivery:</strong> {form.deliveryLocation} {form.buildingFloor ? `(${form.buildingFloor})` : ""}</p>
+                <p>🕐 <strong className="text-white/90">Time:</strong> {form.preferredTime}</p>
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2 max-w-lg mx-auto">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-1">
               <a
                 href={submittedWhatsAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto flex-1 gradient-gold text-primary-foreground font-body font-bold py-3.5 px-6 rounded-full text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl hover:shadow-[0_0_35px_hsl(43_100%_50%/0.5)] transition-all hover:scale-105 active:scale-95"
+                className="w-full sm:w-auto flex-1 gradient-gold text-primary-foreground font-body font-bold py-3.5 px-6 rounded-full text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg hover:scale-105 active:scale-95 transition-all"
               >
-                <MessageCircle size={17} />
+                <MessageCircle size={16} />
                 <span>Fungua WhatsApp Sasa</span>
               </a>
 
               <button
                 type="button"
                 onClick={handleResetOrder}
-                className="w-full sm:w-auto bg-secondary hover:bg-secondary/80 border border-white/15 text-white font-body font-semibold py-3.5 px-6 rounded-full text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
+                className="w-full sm:w-auto bg-secondary hover:bg-secondary/80 border border-white/10 text-white font-body font-semibold py-3.5 px-6 rounded-full text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
               >
-                <RotateCcw size={15} />
+                <RotateCcw size={14} />
                 <span>Weka Oda Nyingine</span>
               </button>
             </div>
