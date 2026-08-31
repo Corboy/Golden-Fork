@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Minus, Plus, Trash2, MessageCircle, ShoppingBag, User, Phone, MapPin, Building, Clock, Check, ArrowRight, ArrowLeft, AlertCircle, CheckCircle2, RotateCcw } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Minus, Plus, Trash2, MessageCircle, ShoppingBag, User, Phone, MapPin, Building, Clock, Check, ArrowRight, ArrowLeft, AlertCircle, CheckCircle2, RotateCcw, ExternalLink, Sparkles } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
 import { business, getWhatsAppUrl } from "@/config/business";
 
@@ -20,6 +20,8 @@ const OrderSection = () => {
   const [currentStep, setCurrentStep] = useState<1 | 2 | 3>(1);
   const [orderSubmitted, setOrderSubmitted] = useState(false);
   const [submittedWhatsAppUrl, setSubmittedWhatsAppUrl] = useState<string>("");
+  const [orderRefNumber, setOrderRefNumber] = useState<string>("");
+  const [redirectCountdown, setRedirectCountdown] = useState<number>(3);
 
   const [form, setForm] = useState<CheckoutFormState>({
     fullName: "",
@@ -33,6 +35,32 @@ const OrderSection = () => {
   });
 
   const [validationError, setValidationError] = useState<string | null>(null);
+
+  // Auto-redirect effect when order is submitted
+  useEffect(() => {
+    if (!orderSubmitted || !submittedWhatsAppUrl) return;
+
+    // Countdown interval every 1 second
+    const interval = setInterval(() => {
+      setRedirectCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    // Auto-open WhatsApp after 2.6 seconds
+    const timeout = setTimeout(() => {
+      window.open(submittedWhatsAppUrl, "_blank");
+    }, 2600);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
+  }, [orderSubmitted, submittedWhatsAppUrl]);
 
   const goToStep2 = (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,13 +86,13 @@ const OrderSection = () => {
     setCurrentStep(3);
   };
 
-  const generateWhatsAppMessage = () => {
+  const generateWhatsAppMessage = (refNo: string) => {
     const itemsList = items
       .map((i) => `• ${i.quantity} × ${i.name} — ${business.ordering.currencyDisplay} ${(i.price * i.quantity).toLocaleString()}`)
       .join("\n");
 
     const messageLines = [
-      `🍽️ NEW ORDER — GOLDEN FORK`,
+      `🍽️ NEW ORDER #${refNo} — GOLDEN FORK`,
       ``,
       `👤 Customer: ${form.fullName}`,
       `📞 Phone: ${form.phone}`,
@@ -107,11 +135,22 @@ const OrderSection = () => {
     }
 
     setValidationError(null);
-    const message = generateWhatsAppMessage();
+
+    // Generate reference code e.g. GF-8492
+    const refCode = `GF-${Math.floor(1000 + Math.random() * 9000)}`;
+    setOrderRefNumber(refCode);
+
+    const message = generateWhatsAppMessage(refCode);
     const url = getWhatsAppUrl(message);
     setSubmittedWhatsAppUrl(url);
+    setRedirectCountdown(3);
     setOrderSubmitted(true);
-    window.open(url, "_blank");
+
+    // Smoothly scroll to top of thank you section
+    const orderSection = document.getElementById("order");
+    if (orderSection) {
+      orderSection.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const handleResetOrder = () => {
@@ -139,68 +178,140 @@ const OrderSection = () => {
         {/* Header */}
         <div className="text-center mb-8 sm:mb-10">
           <span className="font-body text-[11px] uppercase tracking-[0.35em] text-primary font-bold">
-            CHECKOUT
+            {orderSubmitted ? "CONFIRMATION" : "CHECKOUT"}
           </span>
           <h2 className="font-display text-3xl sm:text-5xl font-black text-white mt-2">
-            Your <span className="gradient-gold-text">Order</span>
+            {orderSubmitted ? (
+              <>
+                Order <span className="gradient-gold-text">Confirmed</span>
+              </>
+            ) : (
+              <>
+                Your <span className="gradient-gold-text">Order</span>
+              </>
+            )}
           </h2>
           <p className="font-body text-xs sm:text-sm text-muted-foreground mt-2 font-light max-w-md mx-auto">
-            Review your dishes, complete quick delivery details, and send your order straight to WhatsApp.
+            {orderSubmitted
+              ? "Your Swahili cuisine feast is prepared to send to Golden Fork Kitchen."
+              : "Review your dishes, complete quick delivery details, and send your order straight to WhatsApp."}
           </p>
         </div>
 
-        {/* ORDER SUCCESS / THANK YOU STATE */}
+        {/* PROFESSIONAL THANK YOU & ORDER CONFIRMATION SCREEN */}
         {orderSubmitted ? (
-          <div className="max-w-xl mx-auto card-luxury rounded-3xl p-6 sm:p-10 border border-primary/40 shadow-2xl text-center space-y-6 animate-scale-in">
-            {/* Animated Glowing Check Icon */}
-            <div className="relative mx-auto w-20 h-20 flex items-center justify-center">
-              <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping opacity-50" />
-              <div className="w-20 h-20 rounded-full gradient-gold text-primary-foreground flex items-center justify-center shadow-[0_0_40px_hsl(43_100%_50%/0.6)]">
-                <CheckCircle2 size={42} className="stroke-[2.5]" />
+          <div className="max-w-2xl mx-auto card-luxury rounded-3xl p-5 sm:p-9 border border-primary/40 shadow-2xl space-y-6 animate-scale-in text-center">
+            {/* Glowing Brand & Check Animation */}
+            <div className="flex flex-col items-center justify-center">
+              <div className="relative mb-4">
+                <div className="absolute -inset-2 rounded-full bg-primary/20 animate-ping opacity-60" />
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full gradient-gold text-primary-foreground flex items-center justify-center shadow-[0_0_50px_hsl(43_100%_50%/0.5)]">
+                  <CheckCircle2 size={46} className="stroke-[2.5]" />
+                </div>
               </div>
-            </div>
 
-            <div className="space-y-2">
+              {/* Status Pill */}
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-primary/15 border border-primary/40 text-primary text-[10px] sm:text-xs font-body font-bold uppercase tracking-widest mb-2">
+                <Sparkles size={12} />
+                <span>ODA IMEPOKELEWA • INATUMWA JIKONI</span>
+              </div>
+
               <h3 className="font-display text-2xl sm:text-4xl font-black text-white">
                 Asante sana, <span className="gradient-gold-text">{form.fullName}</span>!
               </h3>
-              <p className="font-body text-xs sm:text-sm text-white/80">
-                Oda yako imetumwa jikoni Golden Fork kupitia WhatsApp.
+              <p className="font-body text-xs sm:text-sm text-white/75 mt-1 max-w-md">
+                Oda yako imeandaliwa kikamilifu. Tunakuunganisha moja kwa moja na WhatsApp ya jikoni kuthibitisha.
               </p>
             </div>
 
-            {/* Quick Order Recap Box */}
-            <div className="bg-secondary/80 rounded-2xl p-4 border border-white/10 text-xs font-body text-left space-y-2 max-w-md mx-auto">
-              <div className="flex items-center justify-between text-white font-bold border-b border-white/10 pb-2">
-                <span>Total Amount:</span>
-                <span className="text-primary font-display text-base">
-                  {business.ordering.currencyDisplay} {total.toLocaleString()}
+            {/* Auto-Redirect Countdown Bar */}
+            <div className="bg-black/40 rounded-2xl p-3.5 border border-white/10 max-w-md mx-auto space-y-2">
+              <div className="flex items-center justify-between text-xs font-body">
+                <span className="text-white/80 flex items-center gap-1.5 font-medium">
+                  <MessageCircle size={14} className="text-[#25D366]" />
+                  Inafungua WhatsApp moja kwa moja...
                 </span>
+                <span className="text-primary font-bold">{redirectCountdown > 0 ? `${redirectCountdown}s` : "Tayari!"}</span>
               </div>
-              <div className="text-muted-foreground space-y-1 text-[11px]">
-                <p>📍 <strong className="text-white/90">Location:</strong> {form.deliveryLocation} {form.buildingFloor ? `(${form.buildingFloor})` : ""}</p>
-                <p>🕐 <strong className="text-white/90">Preferred Time:</strong> {form.preferredTime}</p>
-                <p>📞 <strong className="text-white/90">Phone:</strong> {form.phone}</p>
+              <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-primary via-[#FFE28A] to-primary rounded-full animate-[progress_2.6s_ease-out_forwards]" />
+              </div>
+            </div>
+
+            {/* Official Digital Receipt Card */}
+            <div className="bg-secondary/70 rounded-2xl p-4 sm:p-6 border border-white/10 text-xs font-body text-left space-y-4 max-w-lg mx-auto">
+              <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                <div>
+                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Order Reference</span>
+                  <p className="font-display text-base font-bold text-primary">{orderRefNumber}</p>
+                </div>
+                <div className="text-right">
+                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Destination</span>
+                  <p className="text-xs font-bold text-white truncate max-w-[160px]">{form.deliveryLocation}</p>
+                </div>
+              </div>
+
+              {/* Customer summary */}
+              <div className="grid grid-cols-2 gap-2 text-[11px] py-1 border-b border-white/5">
+                <div>
+                  <span className="text-muted-foreground">Mteja:</span> <span className="text-white font-medium">{form.fullName}</span>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">Simu:</span> <span className="text-white font-medium">{form.phone}</span>
+                </div>
+                <div>
+                  <span className="text-muted-foreground">Muda:</span> <span className="text-white font-medium">{form.preferredTime}</span>
+                </div>
+                {form.officeName && (
+                  <div>
+                    <span className="text-muted-foreground">Ofisi:</span> <span className="text-white font-medium">{form.officeName}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Itemized list */}
+              <div className="space-y-1.5 pt-1">
+                <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Vyakula Vilivyoagizwa:</span>
+                {items.map((item) => (
+                  <div key={item.id} className="flex items-center justify-between text-xs">
+                    <span className="text-white/90">
+                      {item.quantity} × {item.name}
+                    </span>
+                    <span className="text-primary font-medium">
+                      {(item.price * item.quantity).toLocaleString()} {business.ordering.currency}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Total row */}
+              <div className="pt-3 border-t border-white/10 flex items-center justify-between text-sm">
+                <span className="font-bold text-white">Jumla ya Kulipa:</span>
+                <span className="font-display text-lg font-black gradient-gold-text">
+                  {total.toLocaleString()} {business.ordering.currency}
+                </span>
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2 max-w-lg mx-auto">
               <a
                 href={submittedWhatsAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto gradient-gold text-primary-foreground font-body font-bold py-3.5 px-6 rounded-full text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg hover:scale-105 transition-transform"
+                className="w-full sm:w-auto flex-1 gradient-gold text-primary-foreground font-body font-bold py-3.5 px-6 rounded-full text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-xl hover:shadow-[0_0_35px_hsl(43_100%_50%/0.5)] transition-all hover:scale-105 active:scale-95"
               >
-                <MessageCircle size={16} /> Reopen WhatsApp
+                <MessageCircle size={17} />
+                <span>Fungua WhatsApp Sasa</span>
               </a>
 
               <button
                 type="button"
                 onClick={handleResetOrder}
-                className="w-full sm:w-auto bg-secondary hover:bg-secondary/80 border border-white/10 text-white font-body font-semibold py-3.5 px-6 rounded-full text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
+                className="w-full sm:w-auto bg-secondary hover:bg-secondary/80 border border-white/15 text-white font-body font-semibold py-3.5 px-6 rounded-full text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-colors"
               >
-                <RotateCcw size={15} /> Order More / Back to Menu
+                <RotateCcw size={15} />
+                <span>Weka Oda Nyingine</span>
               </button>
             </div>
           </div>
