@@ -1,0 +1,16 @@
+{
+  "name": "Golden Fork — Swahili Cuisine",
+  "short_name": "Golden Fork",
+  "description": "Authentic Swahili cuisine in Mikocheni, Dar es Salaam. Browse the menu and order via WhatsApp.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0C0C0C",
+  "theme_color": "#0C0C0C",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,45 +1,66 @@
-import { MapPin, Phone, Clock, Instagram } from "lucide-react";
-import { useFadeIn } from "@/hooks/use-fade-in";
+import { MapPin, Phone, MessageCircle, ExternalLink } from "lucide-react";
+import { business, getWhatsAppUrl } from "@/config/business";
 
 const Footer = () => {
-  const fadeRef = useFadeIn();
-
   return (
-    <footer className="border-t border-border bg-card/50 py-20">
-      <div ref={fadeRef} className="container mx-auto px-4 fade-section">
-        <div className="grid md:grid-cols-3 gap-12">
-          <div>
-            <h3 className="font-display text-3xl font-black gradient-gold-text mb-5 tracking-wider">ZEBRA</h3>
-            <p className="text-muted-foreground font-body text-sm font-light leading-relaxed">
-              Dar es Salaam's premium street food experience. Big portions, bold flavors, made for sharing.
-            </p>
+    <footer id="location" className="border-t border-white/10 bg-[#0a0a0a] py-12 px-4 text-xs font-body text-muted-foreground">
+      <div className="container mx-auto max-w-2xl flex flex-col items-center text-center space-y-6">
+        {/* Brand & Official Logo */}
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-14 h-14 rounded-full p-1 bg-secondary border border-primary/40 shadow-lg flex items-center justify-center">
+            <img
+              src="/brand/golden-fork-logo.png"
+              alt="Golden Fork Seal"
+              className="w-full h-full object-contain rounded-full"
+              width={56}
+              height={56}
+            />
           </div>
-          <div className="space-y-4 font-body">
-            <h4 className="font-display text-sm font-bold uppercase tracking-wider mb-5">Contact</h4>
-            <div className="flex items-center gap-3 text-muted-foreground text-sm">
-              <MapPin size={14} className="text-primary shrink-0" /> Kinondoni Biafra, Atlas Road, Dar es Salaam
-            </div>
-            <div className="flex items-center gap-3 text-muted-foreground text-sm">
-              <Phone size={14} className="text-primary shrink-0" /> +255 700 000 000
-            </div>
-            <div className="flex items-center gap-3 text-muted-foreground text-sm">
-              <Clock size={14} className="text-primary shrink-0" /> Open daily: 10AM – 11PM
-            </div>
-          </div>
-          <div className="font-body">
-            <h4 className="font-display text-sm font-bold uppercase tracking-wider mb-5">Follow Us</h4>
-            <div className="flex gap-3">
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-              >
-                <Instagram size={16} />
-              </a>
-            </div>
-            <p className="text-muted-foreground text-xs mt-8">
-              © {new Date().getFullYear()} Zebra Restaurant. All rights reserved.
-            </p>
-          </div>
+          <h3 className="font-display text-2xl font-black gradient-gold-text tracking-wider mt-1">
+            {business.name}
+          </h3>
+          <span className="text-[11px] font-body uppercase tracking-[0.25em] text-primary font-semibold">
+            {business.cuisine} • {business.location.neighborhood}
+          </span>
+        </div>
+
+        {/* Address */}
+        <div className="flex items-center justify-center gap-2 text-white/80 text-xs sm:text-sm font-light">
+          <MapPin size={15} className="text-primary shrink-0" />
+          <span>{business.location.fullAddress}</span>
+        </div>
+
+        {/* Action Buttons Row */}
+        <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <a
+            href={business.location.googleMapsSearchUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="gradient-gold text-primary-foreground font-body font-bold text-xs px-5 py-3 rounded-full flex items-center gap-2 shadow-md hover:scale-105 transition-transform"
+          >
+            <ExternalLink size={14} /> Google Maps
+          </a>
+
+          <a
+            href={`tel:${business.contact.phone}`}
+            className="border border-primary/40 bg-secondary/60 text-white hover:text-primary font-body font-semibold text-xs px-5 py-3 rounded-full flex items-center gap-2 hover:border-primary transition-colors"
+          >
+            <Phone size={14} className="text-primary" /> Call {business.contact.whatsappDisplay}
+          </a>
+
+          <a
+            href={getWhatsAppUrl("Hi Golden Fork, I'd like to ask about the menu.")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="border border-primary/40 bg-secondary/60 text-white hover:text-primary font-body font-semibold text-xs px-5 py-3 rounded-full flex items-center gap-2 hover:border-primary transition-colors"
+          >
+            <MessageCircle size={14} className="text-[#25D366]" /> WhatsApp
+          </a>
+        </div>
+
+        {/* Copyright */}
+        <div className="pt-6 border-t border-white/5 w-full text-[11px] text-muted-foreground/60">
+          © {new Date().getFullYear()} Golden Fork — Swahili Cuisine. All rights reserved.
         </div>
       </div>
     </footer>

@@ -1,28 +1,21 @@
 import { useState, useEffect, useCallback } from "react";
-import { ShoppingCart, Menu, X, Search } from "lucide-react";
+import { ShoppingCart, Search, X, Menu } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
-
-const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Kisinia", href: "#kisinia" },
-  { label: "Menu", href: "#menu" },
-  { label: "Custom", href: "#custom-order" },
-  { label: "Location", href: "#location" },
-];
 
 interface NavbarProps {
   searchQuery: string;
   onSearchChange: (q: string) => void;
+  onOpenCart?: () => void;
 }
 
-const Navbar = ({ searchQuery, onSearchChange }: NavbarProps) => {
+const Navbar = ({ searchQuery, onSearchChange, onOpenCart }: NavbarProps) => {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { itemCount } = useCart();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -34,112 +27,115 @@ const Navbar = ({ searchQuery, onSearchChange }: NavbarProps) => {
     });
   }, [onSearchChange]);
 
+  const handleCartClick = (e: React.MouseEvent) => {
+    if (onOpenCart) {
+      e.preventDefault();
+      onOpenCart();
+    }
+  };
+
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-background/95 backdrop-blur-xl border-b border-gold-subtle shadow-[0_4px_30px_hsl(43_100%_50%/0.05)]"
-          : "bg-transparent"
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 h-14 sm:h-16 flex items-center transition-all duration-300 ${
+        scrolled || searchOpen || mobileMenuOpen
+          ? "bg-black/95 backdrop-blur-xl border-b border-white/10 shadow-lg"
+          : "bg-gradient-to-b from-black/90 via-black/60 to-transparent"
       }`}
     >
-      <div className="container mx-auto flex items-center justify-between py-4 px-4">
-        <a href="#home" className="font-display text-2xl font-black tracking-[0.15em] gradient-gold-text">
-          ZEBRA
+      <div className="container mx-auto flex items-center justify-between px-3.5 sm:px-6">
+        {/* Brand: GOLDEN FORK (One single line on all screen widths) */}
+        <a href="#home" className="flex items-center gap-2 shrink-0">
+          <span className="font-display text-lg sm:text-2xl font-black tracking-[0.14em] gradient-gold-text whitespace-nowrap leading-none">
+            GOLDEN FORK
+          </span>
         </a>
 
-        {/* Desktop */}
-        <div className="hidden md:flex items-center gap-6">
-          {/* Search */}
-          <div className={`flex items-center transition-all duration-300 ${searchOpen ? "w-64" : "w-8"}`}>
+        {/* Right Actions: Search, Cart, Menu */}
+        <div className="flex items-center gap-2.5 sm:gap-4">
+          {/* Search Toggle / Input */}
+          <div className={`flex items-center transition-all duration-300 ${searchOpen ? "w-36 sm:w-60" : "w-7"}`}>
             {searchOpen && (
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
-                placeholder="Search food... (Biryani, Kisinia...)"
-                className="w-full bg-secondary/80 border border-border rounded-full px-4 py-2 text-sm font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50 focus:glow-gold-subtle transition-all"
+                placeholder="Search food..."
+                className="w-full bg-secondary/95 border border-primary/40 rounded-full px-3 py-1 text-xs font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
                 autoFocus
               />
             )}
-            <button onClick={handleSearchToggle} className="p-2 text-foreground/60 hover:text-primary transition-colors">
+            <button
+              onClick={handleSearchToggle}
+              className="p-1 text-foreground/80 hover:text-primary transition-colors shrink-0"
+              aria-label="Search"
+            >
               {searchOpen ? <X size={18} /> : <Search size={18} />}
             </button>
           </div>
 
-          {navLinks.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="font-body text-xs font-medium tracking-widest text-foreground/60 hover:text-primary transition-colors uppercase"
-            >
-              {l.label}
-            </a>
-          ))}
-
+          {/* Cart Icon with Gold Badge */}
           <a
             href="#order"
-            className="relative p-2.5 rounded-full bg-secondary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:glow-gold"
+            onClick={handleCartClick}
+            className="relative p-1 text-foreground hover:text-primary transition-colors"
+            aria-label={`Cart (${itemCount} items)`}
           >
-            <ShoppingCart size={18} />
+            <ShoppingCart size={19} />
             {itemCount > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full gradient-gold text-primary-foreground text-[10px] flex items-center justify-center font-bold animate-scale-in">
+              <span className="absolute -top-1.5 -right-2 w-4 h-4 rounded-full gradient-gold text-primary-foreground text-[9px] font-bold flex items-center justify-center shadow-md animate-scale-in">
                 {itemCount}
               </span>
             )}
           </a>
-        </div>
 
-        {/* Mobile */}
-        <div className="flex md:hidden items-center gap-2">
-          <button onClick={handleSearchToggle} className="p-2 text-foreground/60">
-            <Search size={20} />
-          </button>
-          <a href="#order" className="relative p-2">
-            <ShoppingCart size={20} className="text-foreground" />
-            {itemCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full gradient-gold text-primary-foreground text-[10px] flex items-center justify-center font-bold">
-                {itemCount}
-              </span>
-            )}
-          </a>
-          <button onClick={() => setMobileOpen(!mobileOpen)} className="text-foreground p-1">
-            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-1 text-foreground hover:text-primary transition-colors"
+            aria-label="Menu"
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile search */}
-      {searchOpen && (
-        <div className="md:hidden px-4 pb-3 animate-fade-in">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Search food... (Biryani, Kisinia, Pilau...)"
-            className="w-full bg-secondary border border-border rounded-full px-4 py-2.5 text-sm font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary/50"
-            autoFocus
-          />
+      {/* Slide-out Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="absolute top-14 sm:top-16 left-0 right-0 bg-black/98 backdrop-blur-2xl border-b border-white/10 animate-fade-in px-6 py-6 flex flex-col gap-4 shadow-2xl">
+          <a
+            href="#home"
+            onClick={() => setMobileMenuOpen(false)}
+            className="font-body text-xs font-semibold uppercase tracking-widest text-white/80 hover:text-primary transition-colors"
+          >
+            Home
+          </a>
+          <a
+            href="#menu"
+            onClick={() => setMobileMenuOpen(false)}
+            className="font-body text-xs font-semibold uppercase tracking-widest text-white/80 hover:text-primary transition-colors"
+          >
+            Digital Menu
+          </a>
+          <a
+            href="#order"
+            onClick={(e) => {
+              setMobileMenuOpen(false);
+              handleCartClick(e);
+            }}
+            className="font-body text-xs font-semibold uppercase tracking-widest text-white/80 hover:text-primary transition-colors"
+          >
+            Cart & Checkout
+          </a>
+          <a
+            href="#location"
+            onClick={() => setMobileMenuOpen(false)}
+            className="font-body text-xs font-semibold uppercase tracking-widest text-white/80 hover:text-primary transition-colors"
+          >
+            Location & Contact
+          </a>
         </div>
       )}
-
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="md:hidden bg-background/98 backdrop-blur-xl border-t border-border animate-fade-in">
-          <div className="container mx-auto py-6 px-4 flex flex-col gap-5">
-            {navLinks.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                onClick={() => setMobileOpen(false)}
-                className="font-body text-base font-medium text-foreground/70 hover:text-primary transition-colors uppercase tracking-wider"
-              >
-                {l.label}
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
-    </nav>
+    </header>
   );
 };
 

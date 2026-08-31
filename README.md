@@ -1,174 +1,79 @@
-# Zebra Street Luxury
+# Golden Fork — Digital Menu & WhatsApp Ordering
 
-Create a premium, high-end, visually powerful restaurant website for Zebra Restaurant (Dar es Salaam).
+A modern, high-performance digital menu and instant WhatsApp ordering platform for **Golden Fork (Swahili Cuisine)** located in Mikocheni, Dar es Salaam, Tanzania.
 
-IMPORTANT:
-This is a street food brand, but the design must feel LUXURIOUS, BOLD, and HIGH VALUE.
+---
 
-👉 Use a “Street Luxury” design style
-(not fine dining, not corporate)
+## 🍽️ About Golden Fork
 
-🎨 DESIGN STYLE:
+Golden Fork brings authentic coastal Swahili culinary heritage to Dar es Salaam. Specializing in aromatic Biryanis, authentic Pilau, Coconut Fish (Samaki wa Kupaka), charcoal grilled meats, ugali platters, and fresh office lunches.
 
-Dark luxury theme (black dominant)
+- **Location**: 4 Kitambaa St, Mikocheni, Dar es Salaam, Tanzania
+- **WhatsApp Ordering**: [+255 654 120 940](https://wa.me/255654120940)
+- **Cuisine**: Authentic Swahili Cuisine
 
-Gold accents for premium feel
+---
 
-White text
+## ✨ Features
 
-Bold typography
+- **📱 Mobile-First Experience**: Optimized for seamless food discovery and rapid checkout on all devices.
+- **🍛 Comprehensive Swahili Menu**: Categorized by Popular, Rice Dishes, Chicken, Beef, Fish & Seafood, Ugali Specialties, Vegetarian & Sides, and Fresh Juices.
+- **⚡ Instant WhatsApp Checkout**: Add items to cart, enter delivery/office details, and generate a formatted WhatsApp order with a single click.
+- **🏢 Office Lunch & Catering Support**: Dedicated office delivery fields and custom request forms for group catering.
+- **🔍 Fast Live Search**: Instant filtering across all dishes, descriptions, and ingredients.
+- **🎨 Warm Gold & Charcoal Aesthetic**: Sophisticated visual branding inspired by Swahili coastal culinary culture.
 
-High contrast visuals
+---
 
-Energetic and modern layout
+## 🛠️ Tech Stack
 
-🔥 BRAND FEEL:
+- **Framework**: React 18 + TypeScript + Vite
+- **Styling**: Tailwind CSS + Lucide Icons + Shadcn UI primitives
+- **State Management**: React Context API (`CartContext`)
+- **Animations**: CSS animations + custom intersection observer fade hooks
 
-Premium but street
+---
 
-Expensive feel but affordable food
+## 🚀 Getting Started
 
-Attractive to young people
+### Prerequisites
+- Node.js `^22.13.0 || >=24.0.0` or compatible
+- npm or bun
 
-Social & shareable vibe
+### Installation
 
-🍛 HERO SECTION:
+```bash
+# Clone the repository
+git clone https://github.com/Corboy/zebra-street-luxe.git golden-fork
+cd golden-fork
 
-Cinematic background (Kisinia or Biryani)
+# Install dependencies
+npm install
 
-Heading:
-“Home of Kisinia – Dar’s Favorite Biryani Experience”
-
-Subtext:
-“Big portions. Rich flavor. Made for sharing.”
-
-🖼️ IMAGE DIRECTION:
-
-Use images that feel:
-
-Rich, oily, spicy biryani (deep colors)
-
-Large group trays (Kisinia)
-
-Real, heavy food portions
-
-Slightly messy, very appetizing
-
-Add:
-
-Warm lighting
-
-High contrast
-
-Slight cinematic shadows
-
-Avoid:
-
-Clean white plates
-
-Minimal food
-
-Western fine dining look
-
-🔥 KISINIA SECTION (MAIN FOCUS):
-
-Make it BIG and visually dominant
-
-Add glow or highlight effect
-
-Options:
-
-Small (2–3 people)
-
-Medium (3–5 people)
-
-Large (5+ people)
-
-Add:
-
-“🔥 Most Popular”
-
-“Best for Groups”
-
-🍽️ MENU:
-
-Biryani (main focus)
-
-Pilau
-
-Fast food
-
-Drinks
-
-🛒 ORDER SYSTEM:
-
-Add-to-cart system
-
-Quantity selector
-
-Auto total price
-
-Checkout:
-Open WhatsApp with formatted message:
-
-“Hi Zebra Restaurant,
-I’d like to order:
-[items]
-Total: XXXX TZS
-Location: ____”
-
-✨ UX FEATURES:
-
-Floating navbar
-
-Sticky order button
-
-Smooth animations
-
-Hover effects
-
-Mobile optimized
-
-💎 FINAL GOAL:
-
-The website must feel like:
-🔥 A premium street food brand
-🔥 Visually addictive
-🔥 High energy
-🔥 Designed to increase WhatsApp orders
-
-⚠️ IMPORTANT:
-
-Do NOT make it:
-
-Plain
-
-Corporate
-
-Basic
-
-Make it feel:
-🔥 EXPENSIVE
-🔥 BOLD
-🔥 IRRESISTIBLE
-
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/056ee109-688a-4097-9caf-dd1e46575baa).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
+# Run the development server
 npm run dev
 ```
+
+The application will be available at `http://localhost:8080`.
+
+### Build & Testing
+
+```bash
+# Typecheck
+npx tsc --noEmit
+
+# Lint
+npm run lint
+
+# Production build
+npm run build
+
+# Unit test suite
+npm run test
+```
+
+---
+
+## 📄 License & Ownership
+
+© Golden Fork — Swahili Cuisine. All rights reserved.

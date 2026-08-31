@@ -1,160 +1,194 @@
 import { useState, useMemo } from "react";
-import { Plus } from "lucide-react";
+import { Plus, Minus, Search } from "lucide-react";
 import { useCart } from "@/contexts/CartContext";
-import { useFadeIn } from "@/hooks/use-fade-in";
-import heroBiryani from "@/assets/hero-biryani.jpg";
-import pilauImg from "@/assets/pilau.jpg";
-import fastfoodImg from "@/assets/fastfood.jpg";
-import drinksImg from "@/assets/drinks.jpg";
-
-export interface MenuItem {
-  id: string;
-  name: string;
-  price: number;
-  desc: string;
-  image: string;
-}
-
-export const categories: { name: string; items: MenuItem[] }[] = [
-  {
-    name: "🍛 Biryani",
-    items: [
-      { id: "biryani-chicken", name: "Chicken Biryani", price: 8000, desc: "Fragrant saffron rice with tender chicken", image: heroBiryani },
-      { id: "biryani-beef", name: "Beef Biryani", price: 10000, desc: "Rich, spiced rice with slow-cooked beef", image: heroBiryani },
-      { id: "biryani-goat", name: "Goat Biryani", price: 12000, desc: "Premium goat meat with aromatic spices", image: heroBiryani },
-    ],
-  },
-  {
-    name: "🍚 Pilau",
-    items: [
-      { id: "pilau-chicken", name: "Chicken Pilau", price: 7000, desc: "Classic Swahili pilau with chicken", image: pilauImg },
-      { id: "pilau-beef", name: "Beef Pilau", price: 8000, desc: "Hearty beef pilau with whole spices", image: pilauImg },
-    ],
-  },
-  {
-    name: "🍗 Fast Food",
-    items: [
-      { id: "chips-chicken", name: "Chips & Chicken", price: 6000, desc: "Crispy fried chicken with golden chips", image: fastfoodImg },
-      { id: "chips-ketchup", name: "Chips Ketchup", price: 3000, desc: "Golden fries with house ketchup", image: fastfoodImg },
-      { id: "burger", name: "Zebra Burger", price: 5000, desc: "Juicy beef patty with special sauce", image: fastfoodImg },
-    ],
-  },
-  {
-    name: "🥤 Drinks",
-    items: [
-      { id: "mango-juice", name: "Fresh Mango Juice", price: 2000, desc: "Cold-pressed tropical mango", image: drinksImg },
-      { id: "passion-juice", name: "Passion Fruit Juice", price: 2000, desc: "Tangy passion fruit blend", image: drinksImg },
-      { id: "soda", name: "Soda", price: 1000, desc: "Assorted cold sodas", image: drinksImg },
-      { id: "water", name: "Water", price: 500, desc: "Bottled water 500ml", image: drinksImg },
-    ],
-  },
-];
+import { MENU_CATEGORIES, MenuItem } from "@/data/golden-fork-menu";
+import { business } from "@/config/business";
 
 interface MenuSectionProps {
   searchQuery: string;
 }
 
 const MenuSection = ({ searchQuery }: MenuSectionProps) => {
-  const [activeCategory, setActiveCategory] = useState(0);
-  const { addItem } = useCart();
-  const fadeRef = useFadeIn();
+  const [activeCategoryId, setActiveCategoryId] = useState<string>("popular");
+  const { items: cartItems, addItem, updateQuantity } = useCart();
 
   const isSearching = searchQuery.trim().length > 0;
 
-  const filteredItems = useMemo(() => {
-    if (!isSearching) return categories[activeCategory].items;
-    const q = searchQuery.toLowerCase();
-    return categories.flatMap((c) => c.items).filter(
-      (item) => item.name.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q)
-    );
-  }, [searchQuery, activeCategory, isSearching]);
+  // Find quantity of an item in cart
+  const getItemCartQty = (id: string): number => {
+    const item = cartItems.find((i) => i.id === id);
+    return item ? item.quantity : 0;
+  };
+
+  // Filtered menu items
+  const displayedItems = useMemo<MenuItem[]>(() => {
+    if (isSearching) {
+      const q = searchQuery.toLowerCase().trim();
+      const map = new Map<string, MenuItem>();
+      MENU_CATEGORIES.forEach((cat) => {
+        cat.items.forEach((item) => {
+          if (
+            item.name.toLowerCase().includes(q) ||
+            item.description.toLowerCase().includes(q) ||
+            item.category.toLowerCase().includes(q)
+          ) {
+            map.set(item.id, item);
+          }
+        });
+      });
+      return Array.from(map.values());
+    }
+
+    const currentCat = MENU_CATEGORIES.find((c) => c.id === activeCategoryId);
+    return currentCat ? currentCat.items : MENU_CATEGORIES[0].items;
+  }, [searchQuery, activeCategoryId, isSearching]);
 
   return (
-    <section id="menu" className="py-24 md:py-36 relative">
-      <div className="absolute top-0 left-0 right-0 section-divider" />
-      <div className="absolute inset-0 bg-gradient-to-b from-secondary/20 via-transparent to-secondary/20 pointer-events-none" />
-
-      <div ref={fadeRef} className="container mx-auto px-4 relative z-10 fade-section">
-        <div className="text-center mb-16">
-          <span className="font-body text-[11px] uppercase tracking-[0.4em] text-primary font-semibold">
-            Our Selection
+    <section id="menu" className="py-12 sm:py-20 relative">
+      <div className="container mx-auto px-4 sm:px-6">
+        {/* Section Header */}
+        <div className="text-center mb-6 sm:mb-10">
+          <span className="font-body text-[11px] uppercase tracking-[0.35em] text-primary font-bold">
+            OUR SELECTION
           </span>
-          <h2 className="font-display text-4xl md:text-6xl font-black mt-5">
+          <h2 className="font-display text-3xl sm:text-5xl md:text-6xl font-black text-white mt-2">
             The <span className="gradient-gold-text">Menu</span>
           </h2>
+          <p className="font-body text-xs sm:text-sm text-muted-foreground mt-2 max-w-md mx-auto font-light">
+            Authentic Swahili dishes cooked fresh with natural coastal spices.
+          </p>
         </div>
 
-        {/* Search results indicator */}
+        {/* Search Feedback */}
         {isSearching && (
-          <div className="text-center mb-8">
-            <p className="font-body text-sm text-muted-foreground">
-              Showing results for "<span className="text-primary">{searchQuery}</span>" — {filteredItems.length} items found
-            </p>
+          <div className="text-center mb-8 flex items-center justify-center gap-2 text-xs font-body text-muted-foreground">
+            <Search size={14} className="text-primary" />
+            <span>
+              Found {displayedItems.length} {displayedItems.length === 1 ? "item" : "items"} for "{searchQuery}"
+            </span>
           </div>
         )}
 
-        {/* Category tabs */}
+        {/* Category Pills (Sticky beneath header without overlapping) */}
         {!isSearching && (
-          <div className="flex flex-wrap justify-center gap-3 mb-14">
-            {categories.map((cat, i) => (
-              <button
-                key={cat.name}
-                onClick={() => setActiveCategory(i)}
-                className={`font-body font-medium px-6 py-3 rounded-full text-xs tracking-wider uppercase transition-all duration-300 ${
-                  i === activeCategory
-                    ? "gradient-gold text-primary-foreground glow-gold-subtle"
-                    : "bg-secondary/60 text-foreground/50 hover:text-foreground hover:bg-secondary"
-                }`}
-              >
-                {cat.name}
-              </button>
-            ))}
+          <div className="sticky top-14 sm:top-16 z-30 bg-black/95 backdrop-blur-xl py-3 -mx-4 px-4 sm:mx-0 sm:px-0 mb-8 sm:mb-12 border-b border-white/10 shadow-lg">
+            <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar pb-1 sm:justify-center">
+              {MENU_CATEGORIES.map((cat) => {
+                const isActive = cat.id === activeCategoryId;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveCategoryId(cat.id)}
+                    className={`whitespace-nowrap px-5 py-2.5 rounded-full text-xs font-body font-semibold tracking-wider transition-all duration-300 shrink-0 ${
+                      isActive
+                        ? "gradient-gold text-primary-foreground shadow-lg shadow-primary/20 scale-105"
+                        : "bg-secondary/70 text-foreground/60 hover:text-foreground hover:bg-secondary border border-border/60"
+                    }`}
+                  >
+                    {cat.name}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         )}
 
-        {/* Items grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7 max-w-5xl mx-auto">
-          {filteredItems.map((item, i) => (
-            <div
-              key={item.id}
-              className="card-luxury rounded-2xl overflow-hidden card-hover opacity-0 animate-fade-in group"
-              style={{ animationDelay: `${i * 0.08}s` }}
-            >
-              <div className="h-48 img-zoom">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                  width={400}
-                  height={192}
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="font-display text-lg font-bold">{item.name}</h3>
-                <p className="text-muted-foreground text-xs font-body mt-1.5 font-light leading-relaxed">{item.desc}</p>
-                <div className="flex items-center justify-between mt-5">
-                  <div>
-                    <span className="font-display text-xl font-black text-primary">
+        {/* Food Items Cards Grid - Styled like Image 1 */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
+          {displayedItems.map((item) => {
+            const qty = getItemCartQty(item.id);
+
+            return (
+              <div
+                key={item.id}
+                className="card-luxury rounded-3xl overflow-hidden border border-white/10 hover:border-primary/40 transition-all duration-300 flex flex-col justify-between shadow-2xl group"
+              >
+                <div>
+                  {/* Food Image */}
+                  <div className="h-56 sm:h-64 relative overflow-hidden bg-secondary img-zoom">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      width={450}
+                      height={260}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+
+                    {/* Badge */}
+                    {item.badge && (
+                      <span className="absolute top-3.5 left-3.5 gradient-gold text-primary-foreground text-[10px] font-bold px-3 py-1 rounded-full font-body uppercase tracking-wider shadow-md">
+                        {item.badge}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Food Info */}
+                  <div className="p-6">
+                    <h3 className="font-display font-bold text-xl text-white group-hover:text-primary transition-colors">
+                      {item.name}
+                    </h3>
+                    <p className="font-body text-xs sm:text-sm text-muted-foreground mt-2 leading-relaxed font-light line-clamp-2">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Bottom Row: Price & Circular Gold Action Button */}
+                <div className="px-6 pb-6 pt-1 flex items-center justify-between">
+                  <div className="flex items-baseline">
+                    <span className="font-display text-2xl font-black text-primary">
                       {item.price.toLocaleString()}
                     </span>
-                    <span className="text-[10px] font-body text-muted-foreground ml-1 uppercase">TZS</span>
+                    <span className="text-[11px] font-body text-muted-foreground ml-1.5 uppercase font-medium">
+                      {business.ordering.currency}
+                    </span>
                   </div>
-                  <button
-                    onClick={() => addItem({ id: item.id, name: item.name, price: item.price })}
-                    className="gradient-gold text-primary-foreground w-10 h-10 rounded-full flex items-center justify-center hover:shadow-[0_0_25px_hsl(43_100%_50%/0.4)] transition-all duration-300 hover:-translate-y-0.5"
-                  >
-                    <Plus size={18} />
-                  </button>
+
+                  {qty === 0 ? (
+                    <button
+                      onClick={() => addItem({ id: item.id, name: item.name, price: item.price })}
+                      className="w-12 h-12 rounded-full gradient-gold text-primary-foreground flex items-center justify-center shadow-lg hover:shadow-[0_0_25px_hsl(43_100%_50%/0.5)] hover:scale-110 active:scale-95 transition-all duration-300"
+                      aria-label={`Add ${item.name} to cart`}
+                      title="Add to order"
+                    >
+                      <Plus size={22} className="stroke-[2.5]" />
+                    </button>
+                  ) : (
+                    <div className="flex items-center gap-1.5 bg-secondary border border-primary/40 rounded-full p-1 shadow-md">
+                      <button
+                        onClick={() => updateQuantity(item.id, qty - 1)}
+                        className="w-8 h-8 rounded-full bg-background flex items-center justify-center text-foreground hover:bg-muted transition-colors"
+                        aria-label="Decrease quantity"
+                      >
+                        <Minus size={14} />
+                      </button>
+                      <span className="font-body font-bold text-sm w-6 text-center text-primary">
+                        {qty}
+                      </span>
+                      <button
+                        onClick={() => updateQuantity(item.id, qty + 1)}
+                        className="w-8 h-8 rounded-full gradient-gold text-primary-foreground flex items-center justify-center shadow-sm"
+                        aria-label="Increase quantity"
+                      >
+                        <Plus size={14} />
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        {isSearching && filteredItems.length === 0 && (
-          <div className="text-center py-20">
-            <p className="font-body text-muted-foreground text-lg">No items match your search</p>
+        {/* Empty State */}
+        {isSearching && displayedItems.length === 0 && (
+          <div className="text-center py-16 max-w-md mx-auto card-luxury rounded-3xl p-8 border border-border">
+            <p className="font-display text-lg font-bold">No dishes found</p>
+            <p className="font-body text-xs text-muted-foreground mt-2">
+              Try searching for "Biryani", "Pilau", "Kuku", or "Samaki".
+            </p>
           </div>
         )}
       </div>

@@ -3,22 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- TODO: Set the document title to the name of your application -->
-    <title>Zebra Restaurant – Dar's Favorite Biryani & Kisinia</title>
-    <meta name="description" content="Premium street food in Dar es Salaam. Home of Kisinia – big portions, rich flavor, made for sharing. Order via WhatsApp." />
-    <meta name="author" content="Zebra Restaurant" />
+    <title>Golden Fork — Swahili Cuisine | Mikocheni, Dar es Salaam</title>
+    <meta name="description" content="Authentic Swahili cuisine in Mikocheni, Dar es Salaam. Browse our fresh digital menu and order office lunches, platters, and daily meals directly via WhatsApp." />
+    <meta name="author" content="Golden Fork" />
+    <meta name="keywords" content="Golden Fork, Swahili Cuisine, Mikocheni, Dar es Salaam, Biryani, Pilau, Samaki wa Kupaka, Office Lunch, Food Delivery, WhatsApp Ordering" />
+    <meta name="theme-color" content="#0C0C0C" />
+    <meta name="application-name" content="Golden Fork" />
+    <meta name="apple-mobile-web-app-title" content="Golden Fork" />
 
-    <meta property="og:title" content="Zebra Restaurant – Home of Kisinia" />
-    <meta property="og:description" content="Dar es Salaam's premium street food. Big portions, bold flavors. Order Kisinia & Biryani via WhatsApp." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@Lovable" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="restaurant" />
+    <meta property="og:title" content="Golden Fork — Swahili Cuisine | Mikocheni" />
+    <meta property="og:description" content="Authentic Swahili flavours in Mikocheni, Dar es Salaam. Browse our digital menu and order fresh meals and office lunches via WhatsApp." />
+    <meta property="og:site_name" content="Golden Fork" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Golden Fork — Swahili Cuisine | Mikocheni" />
+    <meta name="twitter:description" content="Authentic Swahili flavours in Mikocheni, Dar es Salaam. Order fresh meals directly via WhatsApp." />
+
+    <!-- Structured Data: Restaurant Schema -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Restaurant",
+        "name": "Golden Fork",
+        "servesCuisine": "Swahili Cuisine",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "4 Kitambaa St",
+          "addressLocality": "Mikocheni",
+          "addressRegion": "Dar es Salaam",
+          "addressCountry": "TZ"
+        },
+        "telephone": "+255 654 120 940",
+        "url": "https://wa.me/255654120940"
+      }
+    </script>
   </head>
 
-  <body>
+  <body class="bg-background text-foreground antialiased selection:bg-primary selection:text-primary-foreground">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
