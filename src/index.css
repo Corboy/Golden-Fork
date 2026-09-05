@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,43 +6,44 @@
 
 @layer base {
   :root {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 95%;
+    --background: 0 0% 5%;
+    --foreground: 0 0% 96%;
 
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 95%;
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 96%;
 
-    --popover: 0 0% 8%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 9%;
+    --popover-foreground: 0 0% 96%;
 
-    --primary: 43 100% 50%;
-    --primary-foreground: 0 0% 4%;
+    /* Wonderland Bar & Grill Signature Flame Ember Orange */
+    --primary: 18 90% 55%;
+    --primary-foreground: 0 0% 98%;
 
-    --secondary: 0 0% 11%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 96%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 55%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 43 100% 50%;
-    --accent-foreground: 0 0% 4%;
+    --accent: 18 90% 55%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 95%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 43 100% 50%;
+    --border: 0 0% 16%;
+    --input: 0 0% 16%;
+    --ring: 18 90% 55%;
 
     --radius: 0.75rem;
 
-    --gold: 43 100% 50%;
-    --gold-dark: 43 80% 35%;
-    --gold-light: 43 100% 70%;
-    --ember: 15 90% 50%;
-    --surface-elevated: 0 0% 10%;
+    --gold: 18 90% 55%;
+    --gold-dark: 14 88% 42%;
+    --gold-light: 25 95% 65%;
+    --ember: 18 90% 55%;
+    --surface-elevated: 0 0% 11%;
 
-    --font-display: 'Playfair Display', serif;
+    --font-display: 'Outfit', 'Playfair Display', sans-serif;
     --font-body: 'Poppins', sans-serif;
   }
 }
@@ -75,12 +76,13 @@
     background-color: hsl(var(--surface-elevated));
   }
 
+  /* Wonderland Flame Gradients */
   .gradient-gold {
-    background: linear-gradient(135deg, hsl(43 100% 55%), hsl(43 80% 40%));
+    background: linear-gradient(135deg, hsl(24 95% 56%), hsl(14 90% 48%));
   }
 
   .gradient-gold-text {
-    background: linear-gradient(135deg, hsl(43 100% 75%), hsl(43 100% 50%), hsl(43 80% 38%));
+    background: linear-gradient(135deg, hsl(28 100% 68%), hsl(18 92% 56%), hsl(10 88% 48%));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -91,15 +93,15 @@
   }
 
   .glow-gold {
-    box-shadow: 0 0 30px hsl(43 100% 50% / 0.25), 0 0 60px hsl(43 100% 50% / 0.08);
+    box-shadow: 0 0 30px hsl(18 90% 55% / 0.3), 0 0 60px hsl(14 90% 48% / 0.12);
   }
 
   .glow-gold-lg {
-    box-shadow: 0 0 50px hsl(43 100% 50% / 0.35), 0 0 100px hsl(43 100% 50% / 0.12);
+    box-shadow: 0 0 50px hsl(18 90% 55% / 0.4), 0 0 100px hsl(14 90% 48% / 0.16);
   }
 
   .glow-gold-subtle {
-    box-shadow: 0 0 20px hsl(43 100% 50% / 0.12);
+    box-shadow: 0 0 20px hsl(18 90% 55% / 0.15);
   }
 
   .border-gold {
@@ -107,45 +109,40 @@
   }
 
   .border-gold-subtle {
-    border-color: hsl(43 100% 50% / 0.2);
+    border-color: hsl(18 90% 55% / 0.25);
   }
 
   .hero-overlay {
     background: linear-gradient(180deg, hsl(0 0% 4% / 0.2) 0%, hsl(0 0% 4% / 0.6) 40%, hsl(0 0% 4% / 0.95) 100%);
   }
 
-  .card-hover {
-    @apply transition-all duration-500;
-  }
-  .card-hover:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 50px hsl(43 100% 50% / 0.12), 0 0 0 1px hsl(43 100% 50% / 0.1);
-  }
-
   .card-luxury {
-    background: linear-gradient(145deg, hsl(0 0% 9%) 0%, hsl(0 0% 6%) 100%);
-    border: 1px solid hsl(0 0% 15%);
+    background: hsl(0 0% 7% / 0.85);
+    backdrop-filter: blur(16px);
+    border: 1px solid hsl(0 0% 100% / 0.08);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .card-luxury:hover {
+    border-color: hsl(18 90% 55% / 0.4);
+    box-shadow: 0 8px 32px hsl(0 0% 0% / 0.6), 0 0 24px hsl(18 90% 55% / 0.12);
   }
 
   .btn-luxury {
-    @apply relative overflow-hidden transition-all duration-300;
-  }
-  .btn-luxury::before {
-    content: '';
-    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
-    background: linear-gradient(135deg, hsl(43 100% 60%), hsl(43 80% 45%));
-  }
-  .btn-luxury:hover::before {
-    @apply opacity-100;
+    background: linear-gradient(135deg, hsl(24 95% 56%), hsl(14 90% 48%));
+    color: hsl(var(--primary-foreground));
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .btn-luxury:hover {
-    box-shadow: 0 0 30px hsl(43 100% 50% / 0.4);
+    box-shadow: 0 0 30px hsl(18 90% 55% / 0.4);
     transform: translateY(-2px);
   }
 
   .section-divider {
     height: 1px;
-    background: linear-gradient(90deg, transparent, hsl(43 100% 50% / 0.3), transparent);
+    background: linear-gradient(90deg, transparent, hsl(18 90% 55% / 0.3), transparent);
   }
 
   .img-zoom {
@@ -201,5 +198,5 @@ html, body {
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(43 100% 50% / 0.4);
+  background: hsl(18 90% 55% / 0.5);
 }

@@ -7,20 +7,20 @@ const Footer = () => {
       <div className="container mx-auto max-w-2xl flex flex-col items-center text-center space-y-6">
         {/* Brand & Official Logo */}
         <div className="flex flex-col items-center gap-2">
-          <div className="w-14 h-14 rounded-full p-1 bg-secondary border border-primary/40 shadow-lg flex items-center justify-center">
+          <div className="w-16 h-16 rounded-full p-2 bg-secondary border border-primary/40 shadow-lg flex items-center justify-center">
             <img
-              src="/brand/golden-fork-logo.png"
-              alt="Golden Fork Seal"
-              className="w-full h-full object-contain rounded-full"
-              width={56}
-              height={56}
+              src="/brand/wonderland-emblem-orange.png"
+              alt="Wonderland Bar & Grill Seal"
+              className="w-full h-full object-contain"
+              width={64}
+              height={64}
             />
           </div>
           <h3 className="font-display text-2xl font-black gradient-gold-text tracking-wider mt-1">
             {business.name}
           </h3>
           <span className="text-[11px] font-body uppercase tracking-[0.25em] text-primary font-semibold">
-            {business.cuisine} • {business.location.neighborhood}
+            {business.cuisine} • {business.location.city}
           </span>
         </div>
 
@@ -49,7 +49,7 @@ const Footer = () => {
           </a>
 
           <a
-            href={getWhatsAppUrl("Hi Golden Fork, I'd like to ask about the menu.")}
+            href={getWhatsAppUrl("Hi Wonderland Bar & Grill, I'd like to ask about the menu.")}
             target="_blank"
             rel="noopener noreferrer"
             className="border border-primary/40 bg-secondary/60 text-white hover:text-primary font-body font-semibold text-xs px-5 py-3 rounded-full flex items-center gap-2 hover:border-primary transition-colors"
@@ -60,7 +60,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="pt-6 border-t border-white/5 w-full text-[11px] text-muted-foreground/60">
-          © {new Date().getFullYear()} Golden Fork — Swahili Cuisine. All rights reserved.
+          © {new Date().getFullYear()} Wonderland Bar & Grill. All rights reserved.
         </div>
       </div>
     </footer>

@@ -1,8 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <circle cx="32" cy="32" r="31" fill="#FDFBF7" stroke="#A96E20" stroke-width="1.5"/>
-  <circle cx="32" cy="32" r="20" fill="#F59E0B"/>
+  <defs>
+    <linearGradient id="flame" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B35"/>
+      <stop offset="100%" stop-color="#E55325"/>
+    </linearGradient>
+  </defs>
   
-  <!-- Hat inside favicon -->
-  <path d="M 23,34 C 20,32 21,26 25,25 C 25,20 30,17 32,19 C 34,17 39,20 39,25 C 43,26 44,32 41,34 Z" fill="#FFFFFF"/>
-  <path d="M 24,37 C 28,39 36,39 40,37" stroke="#FFFFFF" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Dark Circle Background -->
+  <circle cx="32" cy="32" r="31" fill="#141414" stroke="#E55325" stroke-width="1.8"/>
+  
+  <!-- Stylized Cocktail & Grill "W" Emblem -->
+  <!-- Left Wing: Cocktail Glass with Straw & Lemon -->
+  <path d="M 17 22 L 27 38 L 27 22 Z" fill="none" stroke="url(#flame)" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M 21 16 L 23 23" stroke="url(#flame)" stroke-width="2" stroke-linecap="round"/>
+  <circle cx="15" cy="24" r="3" fill="none" stroke="url(#flame)" stroke-width="1.8"/>
+  
+  <!-- Right Wing: Grill Shape with Spatula and Fork -->
+  <polygon points="33,24 49,24 41,40" fill="url(#flame)"/>
+  <line x1="36" y1="18" x2="39" y2="24" stroke="url(#flame)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="44" y1="18" x2="41" y2="24" stroke="url(#flame)" stroke-width="2" stroke-linecap="round"/>
 </svg>

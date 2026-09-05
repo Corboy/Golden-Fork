@@ -7,17 +7,17 @@ const HeroSection = () => {
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden px-4"
     >
-      {/* Background Image with Rich Vignette & Subtle Grain */}
+      {/* Background Image with Rich Dark Charcoal Vignette & Sizzling Atmosphere */}
       <div className="absolute inset-0 z-0">
         <img
           src={heroBg}
-          alt="Golden Fork Fresh Swahili Biryani and Coastal Cuisine"
+          alt="Wonderland Bar & Grill — Sizzling BBQ and Cocktails"
           className="w-full h-full object-cover object-center scale-105"
           width={1920}
           height={1080}
           loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/60 to-[#0c0c0c]" />
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -29,30 +29,43 @@ const HeroSection = () => {
 
       {/* Main Content - Centered & Filling the Viewport */}
       <div className="relative z-10 container mx-auto max-w-2xl text-center flex flex-col items-center pt-20 pb-16">
-        {/* Top Gold Badge */}
-        <div className="mb-6 opacity-0 animate-fade-in" style={{ animationDelay: "0.15s" }}>
-          <span className="font-body text-[10px] sm:text-xs uppercase tracking-[0.35em] text-primary font-bold border border-primary/40 rounded-full px-5 py-2 bg-black/40 backdrop-blur-md shadow-lg">
-            ★ DAR ES SALAAM'S FINEST SWAHILI CUISINE ★
+        {/* Brand Emblem */}
+        <div className="mb-4 opacity-0 animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-2.5 bg-black/60 backdrop-blur-md border border-primary/40 shadow-[0_0_40px_hsl(18_90%_55%/0.25)] flex items-center justify-center">
+            <img
+              src="/brand/wonderland-emblem-orange.png"
+              alt="Wonderland Bar & Grill Emblem"
+              className="w-full h-full object-contain"
+              width={96}
+              height={96}
+            />
+          </div>
+        </div>
+
+        {/* Top Flame Badge */}
+        <div className="mb-5 opacity-0 animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <span className="font-body text-[10px] sm:text-xs uppercase tracking-[0.35em] text-primary font-bold border border-primary/40 rounded-full px-5 py-2 bg-black/50 backdrop-blur-md shadow-lg">
+            ★ SIZZLING BBQ • BURGERS • CRAFT COCKTAILS ★
           </span>
         </div>
 
         {/* Big Bold Headline */}
         <h1
           className="font-display text-4xl sm:text-6xl md:text-7xl font-black text-white leading-[1.05] tracking-tight mb-4 opacity-0 animate-fade-in-up"
-          style={{ animationDelay: "0.3s" }}
+          style={{ animationDelay: "0.35s" }}
         >
-          Taste of Mikocheni –{" "}
+          Taste the Flame –{" "}
           <span className="gradient-gold-text block sm:inline">
-            Dar's Favorite Biryani Experience
+            Dar's Ultimate Bar & Grill
           </span>
         </h1>
 
         {/* Subtitle */}
         <p
-          className="font-body text-sm sm:text-base md:text-lg text-white/70 max-w-lg mx-auto font-light leading-relaxed mb-8 opacity-0 animate-fade-in"
+          className="font-body text-sm sm:text-base md:text-lg text-white/75 max-w-lg mx-auto font-light leading-relaxed mb-8 opacity-0 animate-fade-in"
           style={{ animationDelay: "0.5s" }}
         >
-          Big portions. Rich flavor. Made for sharing.
+          Sizzling charcoal BBQ, smoked ribs, gourmet smash burgers, fresh seafood, and craft cocktails.
         </p>
 
         {/* Clean Luxury Action Buttons */}
@@ -62,16 +75,16 @@ const HeroSection = () => {
         >
           <a
             href="#menu"
-            className="w-full gradient-gold text-primary-foreground font-body font-bold py-4 px-8 rounded-full text-xs sm:text-sm uppercase tracking-[0.2em] shadow-2xl hover:shadow-[0_0_40px_hsl(43_100%_50%/0.5)] transition-all duration-300 hover:-translate-y-0.5"
+            className="w-full gradient-gold text-primary-foreground font-body font-bold py-4 px-8 rounded-full text-xs sm:text-sm uppercase tracking-[0.2em] shadow-2xl hover:shadow-[0_0_40px_hsl(18_90%_55%/0.5)] transition-all duration-300 hover:-translate-y-0.5"
           >
-            View Menu
+            View Digital Menu
           </a>
 
           <a
-            href={getWhatsAppUrl("Hi Golden Fork, I'd like to order.")}
+            href={getWhatsAppUrl("Hi Wonderland Bar & Grill, I'd like to place an order.")}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full border border-primary/50 text-primary font-body font-bold py-4 px-8 rounded-full text-xs sm:text-sm uppercase tracking-[0.2em] hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 hover:-translate-y-0.5 backdrop-blur-sm bg-black/20"
+            className="w-full border border-primary/50 text-primary font-body font-bold py-4 px-8 rounded-full text-xs sm:text-sm uppercase tracking-[0.2em] hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 hover:-translate-y-0.5 backdrop-blur-sm bg-black/25"
           >
             Order via WhatsApp
           </a>

@@ -43,11 +43,23 @@ const Navbar = ({ searchQuery, onSearchChange, onOpenCart }: NavbarProps) => {
       }`}
     >
       <div className="container mx-auto flex items-center justify-between px-3.5 sm:px-6">
-        {/* Brand: GOLDEN FORK (One single line on all screen widths) */}
-        <a href="#home" className="flex items-center gap-2 shrink-0">
-          <span className="font-display text-lg sm:text-2xl font-black tracking-[0.14em] gradient-gold-text whitespace-nowrap leading-none">
-            GOLDEN FORK
-          </span>
+        {/* Brand: WONDERLAND BAR & GRILL */}
+        <a href="#home" className="flex items-center gap-2 sm:gap-2.5 shrink-0 group">
+          <img
+            src="/brand/wonderland-emblem-orange.png"
+            alt="Wonderland Bar & Grill"
+            className="h-8 sm:h-9 w-auto object-contain transition-transform group-hover:scale-105"
+            width={36}
+            height={36}
+          />
+          <div className="flex flex-col">
+            <span className="font-display text-lg sm:text-2xl font-black tracking-[0.14em] gradient-gold-text whitespace-nowrap leading-none">
+              WONDERLAND
+            </span>
+            <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-[0.25em] text-white/70 leading-tight">
+              BAR & GRILL
+            </span>
+          </div>
         </a>
 
         {/* Right Actions: Search, Cart, Menu */}
@@ -59,7 +71,7 @@ const Navbar = ({ searchQuery, onSearchChange, onOpenCart }: NavbarProps) => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => onSearchChange(e.target.value)}
-                placeholder="Search food..."
+                placeholder="Search grill, burgers, drinks..."
                 className="w-full bg-secondary/95 border border-primary/40 rounded-full px-3 py-1 text-xs font-body text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary"
                 autoFocus
               />
@@ -73,7 +85,7 @@ const Navbar = ({ searchQuery, onSearchChange, onOpenCart }: NavbarProps) => {
             </button>
           </div>
 
-          {/* Cart Icon with Gold Badge */}
+          {/* Cart Icon with Flame Badge */}
           <a
             href="#order"
             onClick={handleCartClick}

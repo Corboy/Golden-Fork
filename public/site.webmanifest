@@ -1,16 +1,21 @@
 {
-  "name": "Golden Fork — Swahili Cuisine",
-  "short_name": "Golden Fork",
-  "description": "Authentic Swahili cuisine in Mikocheni, Dar es Salaam. Browse the menu and order via WhatsApp.",
+  "name": "Wonderland Bar & Grill",
+  "short_name": "Wonderland",
+  "description": "Wonderland Bar & Grill — Sizzling BBQ, Burgers & Cocktails in Dar es Salaam, Tanzania",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0C0C0C",
-  "theme_color": "#0C0C0C",
+  "background_color": "#121212",
+  "theme_color": "#E55325",
   "icons": [
     {
       "src": "/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml"
+    },
+    {
+      "src": "/brand/wonderland-seal.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ]
 }

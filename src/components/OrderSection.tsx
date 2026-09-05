@@ -90,7 +90,7 @@ const OrderSection = () => {
       .join("\n");
 
     const messageLines = [
-      `🍽️ NEW ORDER #${refNo} — GOLDEN FORK`,
+      `🍽️ NEW ORDER #${refNo} — WONDERLAND BAR & GRILL`,
       ``,
       `👤 Customer: ${form.fullName}`,
       `📞 Phone: ${form.phone}`,
@@ -134,7 +134,7 @@ const OrderSection = () => {
 
     setValidationError(null);
 
-    const refCode = `GF-${Math.floor(1000 + Math.random() * 9000)}`;
+    const refCode = `WL-${Math.floor(1000 + Math.random() * 9000)}`;
     setOrderRefNumber(refCode);
 
     const message = generateWhatsAppMessage(refCode);
@@ -189,10 +189,10 @@ const OrderSection = () => {
         {/* CLEAN, SIMPLE & PRO ANIMATED THANK YOU STATE */}
         {orderSubmitted ? (
           <div className="max-w-lg mx-auto card-luxury rounded-3xl p-6 sm:p-10 border border-primary/30 shadow-2xl space-y-6 animate-scale-in text-center">
-            {/* Clean Animated Gold Check */}
+            {/* Clean Animated Flame Check */}
             <div className="relative mx-auto w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
               <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping opacity-40" />
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full gradient-gold text-primary-foreground flex items-center justify-center shadow-[0_0_40px_hsl(43_100%_50%/0.4)]">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full gradient-gold text-primary-foreground flex items-center justify-center shadow-[0_0_40px_hsl(18_90%_55%/0.4)]">
                 <CheckCircle2 size={36} className="stroke-[2.5]" />
               </div>
             </div>
@@ -206,7 +206,7 @@ const OrderSection = () => {
                 Asante sana, <span className="gradient-gold-text">{form.fullName}</span>!
               </h3>
               <p className="font-body text-xs sm:text-sm text-white/70 font-light max-w-sm mx-auto">
-                Oda yako imeandaliwa. Inafungua WhatsApp kutuma moja kwa moja jikoni.
+                Oda yako imeandaliwa. Inafungua WhatsApp kutuma moja kwa moja jikoni Wonderland Bar & Grill.
               </p>
             </div>
 
@@ -220,7 +220,7 @@ const OrderSection = () => {
                 <span className="text-primary font-bold text-xs">{redirectCountdown > 0 ? `${redirectCountdown}s` : "Tayari!"}</span>
               </div>
               <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-primary via-[#FFE28A] to-primary rounded-full animate-[progress_2.6s_ease-out_forwards]" />
+                <div className="h-full bg-gradient-to-r from-primary via-[#FF9E68] to-primary rounded-full animate-[progress_2.6s_ease-out_forwards]" />
               </div>
             </div>
 
@@ -622,7 +622,7 @@ const OrderSection = () => {
                   </div>
 
                   <p className="text-[11px] text-center text-muted-foreground font-body mt-2 font-light">
-                    Direct to Golden Fork WhatsApp • No password or sign up required
+                    Direct to Wonderland Bar & Grill WhatsApp • No password or sign up required
                   </p>
                 </form>
               )}

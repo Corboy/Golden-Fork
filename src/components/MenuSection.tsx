@@ -55,7 +55,7 @@ const MenuSection = ({ searchQuery }: MenuSectionProps) => {
             The <span className="gradient-gold-text">Menu</span>
           </h2>
           <p className="font-body text-xs sm:text-sm text-muted-foreground mt-2 max-w-md mx-auto font-light">
-            Authentic Swahili dishes cooked fresh with natural coastal spices.
+            Sizzling charcoal BBQ, smoked ribs, gourmet smash burgers, fresh seafood & craft cocktails.
           </p>
         </div>
 
@@ -187,7 +187,7 @@ const MenuSection = ({ searchQuery }: MenuSectionProps) => {
           <div className="text-center py-16 max-w-md mx-auto card-luxury rounded-3xl p-8 border border-border">
             <p className="font-display text-lg font-bold">No dishes found</p>
             <p className="font-body text-xs text-muted-foreground mt-2">
-              Try searching for "Biryani", "Pilau", "Kuku", or "Samaki".
+              Try searching for "Ribs", "Steak", "Burger", "Cocktail", or "Wings".
             </p>
           </div>
         )}

@@ -22,13 +22,13 @@ const NotFound = () => {
           Page Not Found
         </h1>
         <p className="mb-8 text-xs sm:text-sm text-muted-foreground font-body leading-relaxed">
-          The page you are looking for does not exist. Explore our Swahili cuisine menu on the homepage.
+          The page you are looking for does not exist. Explore our sizzling bar & grill menu on the homepage.
         </p>
         <Link
           to="/"
           className="gradient-gold text-primary-foreground font-body font-semibold px-7 py-3.5 rounded-full text-xs uppercase tracking-wider inline-flex items-center gap-2 hover:shadow-lg transition-all"
         >
-          <ArrowLeft size={14} /> Return to Golden Fork
+          <ArrowLeft size={14} /> Return to Wonderland
         </Link>
       </div>
     </div>
